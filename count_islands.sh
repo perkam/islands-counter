@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-python -m counter.app "$@"
+python3 -m counter.app "$@"
