@@ -18,4 +18,4 @@ To run the tests:
 `count_islands.sh <path_to_input_file>`
 
 # Run tests:
-`python -m pytest`
+`python3 -m pytest`
