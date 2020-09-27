@@ -1,6 +1,6 @@
 import pytest
 
-from counter.counter import Map, count_islands
+from counter.utils import Map, count_islands
 
 MAPS_TO_COUNT = [
     (
@@ -36,17 +36,18 @@ MAPS_TO_COUNT = [
 
 
 @pytest.mark.parametrize(
-    "file, expected_islands_count", [*MAPS_TO_COUNT], indirect=["file"]
+    "unix_newline_filepath, expected_islands_count",
+    [*MAPS_TO_COUNT],
+    indirect=["unix_newline_filepath"],
 )
-def test_counting_islands(file, expected_islands_count):
-    with open(file, mode="r+", encoding="ascii", newline=None) as f:
+def test_counting_islands(unix_newline_filepath, expected_islands_count):
+    with open(unix_newline_filepath, mode="r+", encoding="ascii", newline=None) as f:
         map = Map.from_file(f)
         assert expected_islands_count == count_islands(map)
 
 
-@pytest.mark.parametrize("huge_file", [], indirect=["huge_file"])
-def test_huge_map_counting(huge_file, rows, columns):
-    with open(huge_file, mode="r+", encoding="ascii", newline=None) as f:
+@pytest.mark.parametrize("filepath_to_huge", [(30, 30)], indirect=["filepath_to_huge"])
+def test_huge_map_counting(filepath_to_huge):
+    with open(filepath_to_huge, mode="r+", encoding="ascii") as f:
         map = Map.from_file(f)
-
-        assert 120 * 120 * 4 == count_islands(map)
+        assert 30 * 30 * 4 == count_islands(map)

@@ -9,9 +9,12 @@ def remove_island(field: MapField, map: Map):
     :param field: Field that belongs to the island that we want to remove
     :param map: map to which given field belongs to
     """
+
     # field = ((x: int, y: int), type: FieldType)
     # Do BFS in order to traverse whole island
+    # Use set for visited because `elem in set` is faster than `elem in list`
     visited = set()
+    # deque has O(1) when it comes to popping left element. List has O(n) so we use deque (https://docs.python.org/3/library/collections.html#collections.deque)
     queue = collections.deque([field])
     while queue:
         current_field = queue.popleft()
@@ -26,6 +29,11 @@ def remove_island(field: MapField, map: Map):
 
 
 def count_islands(map: Map) -> int:
+    """
+    Count islands in given map. This operation removes all the islands from the map in the process.
+    param map: map whose islands should be count
+    :return: Number of islands found in the map
+    """
     islands_count = 0
     for field in map:
         if field.type is FieldType.LAND:

@@ -136,7 +136,12 @@ class Map(object):
         :return: new Map
         """
         if file.closed:
-            raise ValueError("File can not be closed.")
+            raise ValueError("Creation of Map from closed file.")
+        if "r+" not in file.mode:
+            raise ValueError(
+                "File used for map creation has to be open in 'r+' mode in order to write and read, and not in"
+                " '%s' mode" % file.mode
+            )
         # Because \r\n is automatically converted to \n if using translation of the newline (that is the default mode)
         # we have to reconfigure the stream in order not to use the translation. Otherwise \r\n will be treated as ONE
         # CHARACTER when using file.read() but TWO BYTES when using file.seek()

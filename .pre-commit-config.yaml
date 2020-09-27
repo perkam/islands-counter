@@ -44,6 +44,6 @@ repos:
     name: pytest
     stages: [push]
     language: system
-    entry: poetry run pytest --cov --cov-fail-under=100 --cov-config=.coveragerc
+    entry: poetry run python -m pytest --cov --cov-fail-under=100 --cov-config=.coveragerc --cov-report html:cov_html
     types: [python]
     pass_filenames: false

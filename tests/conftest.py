@@ -1,13 +1,12 @@
 import os
-from pathlib import Path
 from tempfile import NamedTemporaryFile
 
 import pytest
 
 
 @pytest.fixture
-def file(request):
-    f = NamedTemporaryFile(delete=False, mode="w", encoding="ascii", newline="\r\n")
+def unix_newline_filepath(request):
+    f = NamedTemporaryFile(delete=False, mode="w", encoding="ascii", newline="\n")
     f.write(request.param)
     f.close()
     yield f.name
@@ -15,7 +14,18 @@ def file(request):
 
 
 @pytest.fixture
-def huge_file():
+def windows_newline_filepath(request):
+    f = NamedTemporaryFile(delete=False, mode="w", encoding="utf-8", newline="\r\n")
+    f.write(request.param)
+    f.close()
+    yield f.name
+    os.unlink(f.name)
+
+
+@pytest.fixture
+def filepath_to_huge(request):
+    ROWS = request.param[0]
+    COLS = request.param[1]
     section = [
         "000000000",
         "010000000",
@@ -26,15 +36,12 @@ def huge_file():
         "110000000",
         "000001100",
     ]
-    f = NamedTemporaryFile(delete=False, mode="w", encoding="ascii", newline="\r\n")
-    for i in range(120):
+    f = NamedTemporaryFile(delete=False, mode="w", encoding="ascii", newline="\n")
+    for i in range(ROWS):
         for k in range(len(section)):
-            for j in range(120):
+            for j in range(COLS):
                 f.write(section[k])
             f.write("\n")
     f.close()
-    p = Path(f.name)
-    print(p.stat().st_size)
-    print(f.name)
     yield f.name
     os.unlink(f.name)
