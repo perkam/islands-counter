@@ -9,6 +9,10 @@ To run the program:
 
 To run the tests:
 * pytest=6.1.0
+* pip 20+
+
+# Setup
+`pip install -r requirements.txt`
 
 # Usage
 `count_islands.sh <path_to_input_file>`
