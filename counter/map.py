@@ -98,7 +98,6 @@ class FileContent(MapContent):
         """
         Write given FieldType at given (x,y) position
         """
-        # We can only write ONE CHARACTER
         offset = x * self.__row_length + y
         self.__file.seek(offset)
         self.__file.write(str(type.value))
