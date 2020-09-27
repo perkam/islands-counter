@@ -28,7 +28,7 @@ def _parse_arguments(args=None):
     return args
 
 
-def __duplicate_file(path: Path):
+def _duplicate_file(path: Path):
     temp_path = str(path) + ".copy"
     return shutil.copy2(path, temp_path)
 
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     parsed_arguments = _parse_arguments()
     input_filepath = parsed_arguments.input
     if parsed_arguments.duplicate:
-        input_filepath = __duplicate_file(parsed_arguments.input)
+        input_filepath = _duplicate_file(parsed_arguments.input)
 
     with open(input_filepath, mode="r+", encoding=parsed_arguments.encoding) as file:
         map = Map.from_file(file)  # type: ignore
