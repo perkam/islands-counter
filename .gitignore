@@ -143,5 +143,3 @@ cython_debug/
 # task
 docs/S8 Recruitment Task (Python Developer).pdf
 
-# pytest coverage directory
-cov_html/
